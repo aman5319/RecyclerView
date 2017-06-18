@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by amidezcod on 18/6/17.
@@ -21,6 +23,7 @@ import java.util.ArrayList;
 public class FragmentRecy_Card_vert extends Fragment {
     private RecyclerView mRecyclerView;
     private ArrayList<CallOfDutyPOJO> callOfDutyPOJOArrayList;
+    private RecyclerViewAdapterForCardView recyclerViewAdapterForCardView;
 
     @Nullable
     @Override
@@ -30,18 +33,45 @@ public class FragmentRecy_Card_vert extends Fragment {
         setupRecyclerView(rootView);
         setupDataForAdapter();
         setupAdapter();
-
+        itemDecorate();
         return rootView;
     }
 
+    private void itemDecorate() {
+        new ItemTouchHelper(new ItemTouchHelper.Callback() {
+            @Override
+            public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN; // for drag and drop
+                int swipeFlags = ItemTouchHelper.START | ItemTouchHelper.END; // for swipe left and right
+                return makeMovementFlags(dragFlags, swipeFlags);
+            }
+
+            // method for drag and drop
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                Collections.swap(callOfDutyPOJOArrayList, viewHolder.getAdapterPosition(), target.getAdapterPosition());
+                recyclerViewAdapterForCardView.notifyItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+                return true;
+            }
+
+            // method for swiping left and right
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                callOfDutyPOJOArrayList.remove(viewHolder.getAdapterPosition());
+                recyclerViewAdapterForCardView.notifyItemRemoved(viewHolder.getAdapterPosition());
+            }
+        }).attachToRecyclerView(mRecyclerView);
+    }
+
     private void setupAdapter() {
-        mRecyclerView.setAdapter(new RecyclerViewAdapterForCardView(callOfDutyPOJOArrayList));
+        recyclerViewAdapterForCardView = new RecyclerViewAdapterForCardView(callOfDutyPOJOArrayList);
+        mRecyclerView.setAdapter(recyclerViewAdapterForCardView);
     }
 
     private void setupDataForAdapter() {
         callOfDutyPOJOArrayList = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
-            callOfDutyPOJOArrayList.add(new CallOfDutyPOJO(R.drawable.b, "Black Ghost", "Activision", "Raven"));
+            callOfDutyPOJOArrayList.add(new CallOfDutyPOJO(R.drawable.b, "Ghost " + i, "Activision", "Raven"));
         }
 
     }
@@ -53,12 +83,12 @@ public class FragmentRecy_Card_vert extends Fragment {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(linearLayoutManager);
     }
-
-    private static class RecyclerViewAdapterForCardView extends
+    
+    class RecyclerViewAdapterForCardView extends
             RecyclerView.Adapter<RecyclerViewAdapterForCardView.ViewHolder> {
         ArrayList<CallOfDutyPOJO> callOfDutyPOJOArrayList;
 
-        public RecyclerViewAdapterForCardView(ArrayList<CallOfDutyPOJO> callOfDutyPOJOArrayList) {
+        private RecyclerViewAdapterForCardView(ArrayList<CallOfDutyPOJO> callOfDutyPOJOArrayList) {
             this.callOfDutyPOJOArrayList = callOfDutyPOJOArrayList;
         }
 
@@ -82,7 +112,7 @@ public class FragmentRecy_Card_vert extends Fragment {
             return callOfDutyPOJOArrayList.size();
         }
 
-        protected static class ViewHolder extends RecyclerView.ViewHolder {
+        class ViewHolder extends RecyclerView.ViewHolder {
 
             CardView cv;
             TextView gameName;
@@ -90,7 +120,7 @@ public class FragmentRecy_Card_vert extends Fragment {
             TextView gameDeveloper2;
             ImageView gamePhoto;
 
-            public ViewHolder(View itemView) {
+            private ViewHolder(View itemView) {
                 super(itemView);
                 cv = itemView.findViewById(R.id.cardview_vertical);
                 gameName = itemView.findViewById(R.id.cardview_game_name);
