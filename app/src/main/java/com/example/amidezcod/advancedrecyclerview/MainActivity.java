@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), this);
         viewPagerAdapter.addFragments(new FloatingEditText(), "Floating Text");
+        viewPagerAdapter.addFragments(new FragmentRecy_Card_vert(), "CardView");
         viewPager.setAdapter(viewPagerAdapter);
     }
 

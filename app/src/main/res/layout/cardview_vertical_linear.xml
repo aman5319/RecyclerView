@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardview_vertical"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:layout_margin="4dp"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:elevation="12dp"
+    android:padding="2dp"
+    app:cardBackgroundColor="#2e744d"
+    app:cardCornerRadius="12dp">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <ImageView
+            android:id="@+id/cardview_game_image"
+            android:layout_width="140dp"
+            android:layout_height="150dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/b"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/cardview_game_name"
+            style="@style/cardview_text"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="36dp"
+            android:text="call of duty black ops 2"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toRightOf="@+id/cardview_game_image"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/cardview_game_developer1"
+            style="@style/cardview_text"
+            android:layout_width="wrap_content"
+            android:layout_height="19dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="8dp"
+            android:text="Activision"
+            app:layout_constraintLeft_toLeftOf="@+id/cardview_game_developer2"
+            app:layout_constraintTop_toBottomOf="@+id/cardview_game_developer2" />
+
+        <TextView
+            android:id="@+id/cardview_game_developer2"
+            style="@style/cardview_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="8dp"
+            android:text="Infinity Ward"
+            app:layout_constraintLeft_toLeftOf="@+id/cardview_game_name"
+            app:layout_constraintTop_toBottomOf="@+id/cardview_game_name" />
+
+
+    </android.support.constraint.ConstraintLayout>
+
+
+</android.support.v7.widget.CardView>
