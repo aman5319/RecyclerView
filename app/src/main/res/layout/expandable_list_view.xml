@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ExpandableListView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/expandable_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:childDivider="@color/colorPrimaryDark"
+    android:soundEffectsEnabled="true"
+    android:groupIndicator="@null"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"/>

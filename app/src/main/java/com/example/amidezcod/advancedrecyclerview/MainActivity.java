@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), this);
         viewPagerAdapter.addFragments(new FloatingEditText(), "Floating Text");
         viewPagerAdapter.addFragments(new FragmentRecy_Card_vert(), "CardView");
+        viewPagerAdapter.addFragments(new FragmentExpandableListView(), "Expandable View");
         viewPager.setAdapter(viewPagerAdapter);
     }
 
