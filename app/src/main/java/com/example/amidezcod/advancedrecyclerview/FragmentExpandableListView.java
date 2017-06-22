@@ -12,6 +12,7 @@ import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,6 +38,14 @@ public class FragmentExpandableListView extends Fragment {
         dummyData();
         expandableListAdapter = new MyExlistAdapter();
         mExpandableListView.setAdapter(expandableListAdapter);
+        mExpandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                Toast.makeText(getActivity(), mArrayListMap.get(mChildArrayList.get(groupPosition)).get(childPosition) ,Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+
         return rootview;
     }
 
