@@ -2,6 +2,7 @@ package com.example.amidezcod.advancedrecyclerview;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,6 +26,7 @@ public class FragmentRecy_Card_vert extends Fragment {
     private RecyclerView mRecyclerView;
     private ArrayList<CallOfDutyPOJO> callOfDutyPOJOArrayList;
     private RecyclerViewAdapterForCardView recyclerViewAdapterForCardView;
+    private FloatingActionButton fab;
 
     @Nullable
     @Override
@@ -35,7 +37,28 @@ public class FragmentRecy_Card_vert extends Fragment {
         setupDataForAdapter();
         setupAdapter();
         itemDecorate();
+       fabHide(rootView);
         return rootView;
+    }
+
+    private void fabHide(View view) {
+        fab= view.findViewById(R.id.fab2);
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                switch (newState) {
+                    case RecyclerView.SCROLL_STATE_IDLE:
+                        fab.show();
+                        break;
+                    default:
+                        fab.hide();
+                        break;
+                }
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
+
     }
 
     private void itemDecorate() {
