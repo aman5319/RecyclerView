@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -112,7 +113,7 @@ public class FragmentRecy_Card_vert extends Fragment {
             return callOfDutyPOJOArrayList.size();
         }
 
-        class ViewHolder extends RecyclerView.ViewHolder {
+        class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
             CardView cv;
             TextView gameName;
@@ -122,12 +123,18 @@ public class FragmentRecy_Card_vert extends Fragment {
 
             private ViewHolder(View itemView) {
                 super(itemView);
+                itemView.setOnClickListener(this);
                 cv = itemView.findViewById(R.id.cardview_vertical);
                 gameName = itemView.findViewById(R.id.cardview_game_name);
                 gameDeveloper1 = itemView.findViewById(R.id.cardview_game_developer1);
                 gameDeveloper2 = itemView.findViewById(R.id.cardview_game_developer2);
                 gamePhoto = itemView.findViewById(R.id.cardview_game_image);
 
+            }
+
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), gameName.getText().toString(), Toast.LENGTH_SHORT).show();
             }
         }
     }
