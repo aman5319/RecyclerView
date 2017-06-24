@@ -1,9 +1,11 @@
 package com.example.amidezcod.advancedrecyclerview;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -84,9 +86,9 @@ public class AppsListFragment extends Fragment {
     private static class MyItem {
         public final long id;
         public final String text;
-        public Drawable imageDrawable;
+        private Drawable imageDrawable;
 
-        public MyItem(long id, String text, Drawable imageId) {
+        private MyItem(long id, String text, Drawable imageId) {
             this.id = id;
             this.text = text;
             this.imageDrawable = imageId;
@@ -97,18 +99,18 @@ public class AppsListFragment extends Fragment {
         TextView textView;
         ImageView imageView;
 
-        public MyViewHolder(View itemView) {
+        private MyViewHolder(View itemView) {
             super(itemView);
-            textView =  itemView.findViewById(R.id.text_app_list);
+            textView = itemView.findViewById(R.id.text_app_list);
             imageView = itemView.findViewById(R.id.image_app_list);
         }
     }
 
-    public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> implements DraggableItemAdapter<MyViewHolder> {
+    private class MyAdapter extends RecyclerView.Adapter<MyViewHolder> implements DraggableItemAdapter<MyViewHolder> {
         List<MyItem> mItems;
 
 
-        public MyAdapter() {
+        private MyAdapter() {
             setHasStableIds(true); // this is required for D&D feature.
             mItems = new ArrayList<>();
             for (int i = 0; i < packages.size(); i++) {
@@ -131,11 +133,26 @@ public class AppsListFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(MyViewHolder holder, int position) {
-            MyItem item = mItems.get(position);
+        public void onBindViewHolder(final MyViewHolder holder, int position) {
+            final MyItem item = mItems.get(position);
             holder.textView.setText(item.text);
             holder.imageView.setImageDrawable(item.imageDrawable);
+            holder.imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String packageName = packages.get(holder.getAdapterPosition()).packageName;
+                    Intent intent = packageManager.getLaunchIntentForPackage(packageName);
+                    if (intent == null) {
+                        // Bring user to the market or let them choose an app?
+                        intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse("market://details?id=" + packageName));
+                    }
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
+            });
         }
+
 
         @Override
         public int getItemCount() {
