@@ -140,15 +140,18 @@ public class AppsListFragment extends Fragment {
             holder.imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    String packageName = packages.get(holder.getAdapterPosition()).packageName;
-                    Intent intent = packageManager.getLaunchIntentForPackage(packageName);
-                    if (intent == null) {
-                        // Bring user to the market or let them choose an app?
-                        intent = new Intent(Intent.ACTION_VIEW);
-                        intent.setData(Uri.parse("market://details?id=" + packageName));
+                    int adapterPos = holder.getAdapterPosition();
+                    if (adapterPos != RecyclerView.NO_POSITION) {
+                        String packageName = packages.get(adapterPos).packageName;
+                        Intent intent = packageManager.getLaunchIntentForPackage(packageName);
+                        if (intent == null) {
+                            // Bring user to the market or let them choose an app?
+                            intent = new Intent(Intent.ACTION_VIEW);
+                            intent.setData(Uri.parse("market://details?id=" + packageName));
+                        }
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
                     }
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
                 }
             });
         }
