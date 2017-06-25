@@ -3,6 +3,7 @@ package com.example.amidezcod.advancedrecyclerview;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,22 +28,20 @@ public class FragmentRecy_Card_vert extends Fragment {
     private ArrayList<CallOfDutyPOJO> callOfDutyPOJOArrayList;
     private RecyclerViewAdapterForCardView recyclerViewAdapterForCardView;
     private FloatingActionButton fab;
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.recycler_view_for_cardview_vertical, container, false);
-
         setupRecyclerView(rootView);
         setupDataForAdapter();
         setupAdapter();
         itemDecorate();
-       fabHide(rootView);
+        fabHide(rootView);
         return rootView;
     }
 
     private void fabHide(View view) {
-        fab= view.findViewById(R.id.fab2);
+        fab = view.findViewById(R.id.fab2);
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
             @Override
@@ -80,9 +79,20 @@ public class FragmentRecy_Card_vert extends Fragment {
 
             // method for swiping left and right
             @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                callOfDutyPOJOArrayList.remove(viewHolder.getAdapterPosition());
+            public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
+                final int ppos = viewHolder.getAdapterPosition();
+
+                final CallOfDutyPOJO callOfDutyPOJO = callOfDutyPOJOArrayList.get(ppos);
+                callOfDutyPOJOArrayList.remove(ppos);
                 recyclerViewAdapterForCardView.notifyItemRemoved(viewHolder.getAdapterPosition());
+                Snackbar.make(getActivity().findViewById(android.R.id.content) , "Card Delete",Snackbar.LENGTH_LONG)
+                        .setAction("UNDO", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                callOfDutyPOJOArrayList.add(ppos,callOfDutyPOJO);
+                                recyclerViewAdapterForCardView.notifyItemInserted(ppos);
+                            }
+                        }).show();
             }
         }).attachToRecyclerView(mRecyclerView);
     }
@@ -95,7 +105,7 @@ public class FragmentRecy_Card_vert extends Fragment {
     private void setupDataForAdapter() {
         callOfDutyPOJOArrayList = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
-            callOfDutyPOJOArrayList.add(new CallOfDutyPOJO(R.drawable.b, "Ghost " + i, "Activision", "Raven"));
+            callOfDutyPOJOArrayList.add(new CallOfDutyPOJO(R.drawable.programming, "Ghost " + i, "Activision", "Raven"));
         }
 
     }
@@ -107,7 +117,7 @@ public class FragmentRecy_Card_vert extends Fragment {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(linearLayoutManager);
     }
-    
+
     class RecyclerViewAdapterForCardView extends
             RecyclerView.Adapter<RecyclerViewAdapterForCardView.ViewHolder> {
         ArrayList<CallOfDutyPOJO> callOfDutyPOJOArrayList;
@@ -136,7 +146,7 @@ public class FragmentRecy_Card_vert extends Fragment {
             return callOfDutyPOJOArrayList.size();
         }
 
-        class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
             CardView cv;
             TextView gameName;
