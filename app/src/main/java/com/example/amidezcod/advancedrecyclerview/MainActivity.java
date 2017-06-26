@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -106,6 +107,7 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Toast.makeText(this, "Settings Menu", Toast.LENGTH_SHORT).show();
             return true;
         }
 
@@ -119,16 +121,21 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            // Handle the camera action
+            Toast.makeText(this, "camera", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_gallery) {
+            Toast.makeText(this, "gallery", Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.nav_slideshow) {
+            Toast.makeText(this, "slideshow", Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.nav_manage) {
+            Toast.makeText(this, "Tools", Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.nav_share) {
+            Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.nav_send) {
+            Toast.makeText(this, "Send", Toast.LENGTH_SHORT).show();
 
         }
 
