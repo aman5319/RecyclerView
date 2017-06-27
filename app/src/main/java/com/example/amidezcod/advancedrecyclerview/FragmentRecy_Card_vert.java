@@ -165,6 +165,19 @@ public class FragmentRecy_Card_vert extends Fragment {
             }
         }
 
+        /**
+         * Called when a view created by this adapter has been detached from its window.
+         * <p>
+         * <p>Becoming detached from the window is not necessarily a permanent condition;
+         * the consumer of an Adapter's views may choose to cache views offscreen while they
+         * are not visible, attaching and detaching them as appropriate.</p>
+         *
+         * @param holder Holder of the view being detached
+         */
+        @Override
+        public void onViewDetachedFromWindow(ViewHolder holder) {
+            holder.itemView.clearAnimation();
+        }
 
         @Override
         public int getItemCount() {
