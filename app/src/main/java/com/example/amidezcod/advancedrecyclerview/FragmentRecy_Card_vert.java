@@ -13,6 +13,8 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +31,9 @@ public class FragmentRecy_Card_vert extends Fragment {
     private ArrayList<CallOfDutyPOJO> callOfDutyPOJOArrayList;
     private RecyclerViewAdapterForCardView recyclerViewAdapterForCardView;
     private FloatingActionButton fab;
+    // Allows to remember the last item shown on screen
+    private int lastPosition = -1;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -38,11 +43,15 @@ public class FragmentRecy_Card_vert extends Fragment {
         setupAdapter();
         itemDecorate();
         fabHide(rootView);
+        itemSwipeAnimation();
+        return rootView;
+    }
+
+    private void itemSwipeAnimation() {
         RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
         itemAnimator.setAddDuration(1000);
         itemAnimator.setRemoveDuration(1000);
         mRecyclerView.setItemAnimator(itemAnimator);
-        return rootView;
     }
 
     private void fabHide(View view) {
@@ -90,11 +99,11 @@ public class FragmentRecy_Card_vert extends Fragment {
                 final CallOfDutyPOJO callOfDutyPOJO = callOfDutyPOJOArrayList.get(ppos);
                 callOfDutyPOJOArrayList.remove(ppos);
                 recyclerViewAdapterForCardView.notifyItemRemoved(viewHolder.getAdapterPosition());
-                Snackbar.make(getActivity().findViewById(android.R.id.content) , "Card Delete",Snackbar.LENGTH_LONG)
+                Snackbar.make(getActivity().findViewById(android.R.id.content), "Card Delete", Snackbar.LENGTH_LONG)
                         .setAction("UNDO", new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                callOfDutyPOJOArrayList.add(ppos,callOfDutyPOJO);
+                                callOfDutyPOJOArrayList.add(ppos, callOfDutyPOJO);
                                 recyclerViewAdapterForCardView.notifyItemInserted(ppos);
                             }
                         }).show();
@@ -143,8 +152,19 @@ public class FragmentRecy_Card_vert extends Fragment {
             holder.gameDeveloper1.setText(callOfDutyPOJOArrayList.get(position).DeveloperName1);
             holder.gameDeveloper2.setText(callOfDutyPOJOArrayList.get(position).DeveloperName2);
             holder.gamePhoto.setImageResource(callOfDutyPOJOArrayList.get(position).imageId);
+            setAnimation(holder.itemView, position);
 
         }
+
+        private void setAnimation(View viewToAnimate, int position) {
+            // If the bound view wasn't previously displayed on screen, it's animated
+            if (position > lastPosition) {
+                Animation animation = AnimationUtils.loadAnimation(getContext(), android.R.anim.slide_in_left);
+                viewToAnimate.startAnimation(animation);
+                lastPosition = position;
+            }
+        }
+
 
         @Override
         public int getItemCount() {
