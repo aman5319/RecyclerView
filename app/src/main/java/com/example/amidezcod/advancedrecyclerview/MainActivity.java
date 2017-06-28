@@ -1,5 +1,7 @@
 package com.example.amidezcod.advancedrecyclerview;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
@@ -109,6 +111,11 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_settings) {
             Toast.makeText(this, "Settings Menu", Toast.LENGTH_SHORT).show();
             return true;
+        } else if (id == R.id.github_code) {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.github_Link_to_roject)));
+            //verify that the intent will resolve to an activity
+            if (intent.resolveActivity(getPackageManager()) != null)
+                startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
