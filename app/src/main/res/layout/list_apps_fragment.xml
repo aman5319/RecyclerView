@@ -6,9 +6,12 @@
     android:orientation="vertical">
 
     <android.support.v7.widget.RecyclerView
-        android:background="#ceccc9"
         android:id="@+id/list_item_app"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/card_for_app_list"/>
+        android:background="#ceccc9"
+        android:scrollbarSize="3dp"
+        android:scrollbarThumbVertical="@color/scroll"
+        android:scrollbars="vertical"
+        tools:listitem="@layout/card_for_app_list" />
 </LinearLayout>

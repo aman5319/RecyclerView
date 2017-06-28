@@ -7,4 +7,5 @@
     <string name="action_settings">Settings</string>
     <string name="github_code">GitHub Code</string>
     <string name="github_Link_to_roject">https://github.com/aman5319/RecyclerView</string>
+    <string name="app_icon">App Icon</string>
 </resources>

@@ -2,37 +2,43 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="4dp"
+    android:layout_margin="4dp"
     android:orientation="vertical">
 
     <android.support.v7.widget.CardView
         android:clickable="true"
         android:foreground="?attr/selectableItemBackground"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:stateListAnimator="@drawable/lift_on_touch"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:cardElevation="4dp"
+        app:cardMaxElevation="8dp"
         tools:targetApi="lollipop">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
+            android:orientation="horizontal"
             android:layout_height="match_parent">
 
             <ImageView
+                android:layout_centerHorizontal="true"
+                android:contentDescription="@string/app_icon"
                 android:id="@+id/image_app_list"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
                 android:padding="4dp" />
 
             <TextView
+                android:layout_margin="8dp"
+                android:layout_below="@id/image_app_list"
+                android:ellipsize="end"
+                android:maxLines="2"
                 android:id="@+id/text_app_list"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:padding="4dp"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 tools:text="Ferereedf" />
-        </LinearLayout>
+        </RelativeLayout>
     </android.support.v7.widget.CardView>
 </LinearLayout>
