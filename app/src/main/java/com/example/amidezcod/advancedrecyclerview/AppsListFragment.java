@@ -1,11 +1,9 @@
 package com.example.amidezcod.advancedrecyclerview;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -137,23 +135,24 @@ public class AppsListFragment extends Fragment {
             final MyItem item = mItems.get(position);
             holder.textView.setText(item.text);
             holder.imageView.setImageDrawable(item.imageDrawable);
-            holder.imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int adapterPos = holder.getAdapterPosition();
-                    if (adapterPos != RecyclerView.NO_POSITION) {
-                        String packageName = packages.get(adapterPos).packageName;
-                        Intent intent = packageManager.getLaunchIntentForPackage(packageName);
-                        if (intent == null) {
-                            // Bring user to the market or let them choose an app?
-                            intent = new Intent(Intent.ACTION_VIEW);
-                            intent.setData(Uri.parse("market://details?id=" + packageName));
-                        }
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                    }
-                }
-            });
+            //click listner won't work properly with drag and drop
+//            holder.imageView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    int adapterPos = holder.getAdapterPosition();
+//                    if (adapterPos != RecyclerView.NO_POSITION) {
+//                        String packageName = packages.get(adapterPos).packageName;
+//                        Intent intent = packageManager.getLaunchIntentForPackage(packageName);
+//                        if (intent == null) {
+//                            // Bring user to the market or let them choose an app?
+//                            intent = new Intent(Intent.ACTION_VIEW);
+//                            intent.setData(Uri.parse("market://details?id=" + packageName));
+//                        }
+//                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                        startActivity(intent);
+//                    }
+//                }
+//            });
         }
 
 
