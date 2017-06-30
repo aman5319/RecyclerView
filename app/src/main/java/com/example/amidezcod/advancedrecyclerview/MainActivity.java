@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity
         viewPagerAdapter.addFragments(new FragmentRecy_Card_vert(), "CardView");
         viewPagerAdapter.addFragments(new FragmentExpandableListView(), "Expandable View");
         viewPagerAdapter.addFragments(new AppsListFragment(), "Apps List");
+        viewPagerAdapter.addFragments(new BindingPicassoDemo() , "Binding");
         viewPager.setAdapter(viewPagerAdapter);
     }
 
