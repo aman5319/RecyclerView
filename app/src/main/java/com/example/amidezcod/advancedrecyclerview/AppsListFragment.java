@@ -3,6 +3,7 @@ package com.example.amidezcod.advancedrecyclerview;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -30,6 +31,7 @@ import java.util.List;
 
 public class AppsListFragment extends Fragment {
     private List<ApplicationInfo> packages;
+    private int spanCount;
     private PackageManager packageManager;
 
     @Override
@@ -74,14 +76,18 @@ public class AppsListFragment extends Fragment {
         dragMgr.setInitiateOnMove(false);
         dragMgr.setInitiateOnLongPress(true);
 
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            spanCount = 2;
+        } else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            spanCount = 4;
+        }
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), spanCount));
         recyclerView.setAdapter(dragMgr.createWrappedAdapter(new MyAdapter()));
         recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
 
             @Override
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
                 int position = parent.getChildAdapterPosition(view); // item position
-                int spanCount = 2; // 3 columns
                 int spacing = 8; // 8px
                 boolean includeEdge = true;
                 int column = position % spanCount; // item column
@@ -108,6 +114,7 @@ public class AppsListFragment extends Fragment {
 
         return view;
     }
+
 
     private static class MyItem {
         public final long id;
@@ -220,6 +227,8 @@ public class AppsListFragment extends Fragment {
 
         }
     }
+
+    ;
 }
 
 
